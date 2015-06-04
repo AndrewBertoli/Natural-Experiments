@@ -5,6 +5,10 @@
 
 RDPlot() creates a regression discontinuity graph with regression lines on either side of the cut-point. The user can choose the smoother, kernel, and bandwidth, along with whether to plot the raw data or the binned-means. Confidence intevals and p-values are estimated using parametic or non-parametric bootstrapping.
 
+
+### ![alt tag](https://cloud.githubusercontent.com/assets/7791421/7993424/e9b03a48-0aba-11e5-8ea3-78962dbf99e3.jpg)
+
+
 ### Sens()
 
 Sens() computes the p-values for different Gamma levels for paired or unpaired data. The argument "Gamma" is the Gamma level, defined as the maximum difference in treatment odds between any two units in the sample. So when Gamma=j (or 1/j), the maximum p-value is computed under the assumption that no unit was more than j-times more likely to be treated than any other unit in the sample. When "Type" is set at "mean", the function will use the mean as the test statistic. When "Type" is set at "rank", the function will do the Wilcoxon Signed-Rank Test or Rank Sum Tests, which are less sensitive to outliers.
