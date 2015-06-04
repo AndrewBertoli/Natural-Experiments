@@ -9,7 +9,7 @@ RDPlot() creates a regression discontinuity graph with regression lines on eithe
 
 Sens() computes the p-values for different Gamma levels for paired or unpaired data. The argument "Gamma" is the Gamma level, defined as the maximum difference in treatment odds between any two units in the sample. So when Gamma=j (or 1/j), the maximum p-value is computed under the assumption that no unit was more than j-times more likely to be treated than any other unit in the sample. When "Type" is set at "mean", the function will use the mean as the test statistic. When "Type" is set at "rank", the function will do the Wilcoxon Signed-Rank Test or Rank Sum Tests, which are less sensitive to outliers.
 
-### BalancePlot
+### BalancePlot()
 
 This function shows the balance between the treatment and control groups by plotting the distrubtion of p-values for all of the covariates. By presenting the data in this way, it is easier to assess whether the p-values appear to be distrubed uniformly between 0 and 1, as would be expected in an experiment.
 
