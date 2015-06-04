@@ -153,7 +153,7 @@ Paired=TRUE, Type="Mean")
 
 This function shows the balance between the treatment and control groups by plotting the distrubtion of p-values for all of the covariates. By presenting the data in this way, it is easier to assess whether the p-values appear to be distrubed uniformly between 0 and 1, as would be expected in an experiment.
 
-### Usage
+##### Usage
 
 BalancePlot=function(Data, Treat, Covariates, Names.To.Print, Shade.Color = "blanchedalmond",
 Title = "Balance Plot", Title.Size = 1.2, na.rm = FALSE,
@@ -163,7 +163,7 @@ Observational.Treat = NULL, Observational.Point.Color = "blue",
 Sample.Name = "Sub-Sample", O.Name = "All Units", Legend = FALSE,
 Paired = FALSE, Observational.Paired = FALSE)
 
-### Arguments
+##### Arguments
 
 Data:	A dataframe where the units are represented by rows and the covariates are included in the columns.
 
