@@ -1,7 +1,7 @@
 
-### Permutation.Test()
+### PermutationTest()
 
-Permutation.Test computes p-values using Monte Carlo simulation under the sharp null hypothesis of no treatment effect.
+PermutationTest computes p-values using Monte Carlo simulation under the sharp null hypothesis of no treatment effect.
 
 ##### Usage
 
@@ -27,5 +27,5 @@ Output:	If Output="p", just the p-value will be returned. If Output="Full", both
 
 data(WorldCup)
 	
-Permutation.Test(Treatment.Outcomes=t$AGGAfter-t$AGGBefore, Control.Outcomes=c$AGGAfter-c$AGGBefore, 
+PermutationTest(Treatment.Outcomes=t$AGGAfter-t$AGGBefore, Control.Outcomes=c$AGGAfter-c$AGGBefore, 
 Paired = TRUE, Simulations = 100000, na.rm = FALSE, Output = "Full")	
