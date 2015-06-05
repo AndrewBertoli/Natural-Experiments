@@ -36,7 +36,7 @@ Built.In.Tests:	Can be set at T.Test and/or KS.Test, or neither.
 
 Point.Color:	The color of the points that will be plotted.
 
-Other.Tests:	A vector with the names of other tests to be included, such as Permutation.Test. The functions for these tests must be loaded into R's gloval enviorment. The functions should take a treatment and control group as the first two arguments and return a p-value.
+Other.Tests:	A vector with the names of other tests to be included, such as PermutationTest. The functions for these tests must be loaded into R's gloval enviorment. The functions should take a treatment and control group as the first two arguments and return a p-value.
 
 pch:	A vector specifying the style of the points for the additional tests.
 
