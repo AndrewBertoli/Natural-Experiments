@@ -3,7 +3,7 @@
 # If the treatment and control outcomes are the same length, users can specify whether the data is paired or unpaired.
 # This function is meant to be used in conjunction with BalancePlot()
 
-Permutation.Test=function(Treatment, Control, Paired=FALSE, Simulations=10000, na.rm=FALSE, Output="p"){
+PermutationTest=function(Treatment, Control, Paired=FALSE, Simulations=10000, na.rm=FALSE, Output="p"){
 
 if(na.rm==FALSE){if(any(is.na(c(Treatment,Control)))==TRUE){return("NAs Detected. Must set na.rm=TRUE")}}
 
