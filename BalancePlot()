@@ -98,10 +98,10 @@ BalancePlot=function(Data, Treat, Covariates, Names.To.Print, Shade.Color = "bla
                         c(0, 1)) & sum(as.numeric(c(o.t[, covs[i, 1]],
                                                     o.c[, covs[i, 1]]))) < 10) {
                 if (Paired == FALSE)
-                    p1 = Permutation.Test(o.t[, covs[i, 1]], o.c[,
+                    p1 = PermutationTest(o.t[, covs[i, 1]], o.c[,
                                                                  covs[i, 1]])
                 if (Paired == TRUE)
-                    p1 = Permutation.Test(o.t[, covs[i, 1]], o.c[,
+                    p1 = PermutationTest(o.t[, covs[i, 1]], o.c[,
                                                                  covs[i, 1]], Paired = TRUE)
                 points(pch = 18, col = Observational.Point.Color,
                        x = p1, y = aty)
@@ -128,10 +128,10 @@ BalancePlot=function(Data, Treat, Covariates, Names.To.Print, Shade.Color = "bla
                         c(0, 1)) & sum(as.numeric(c(t[, covs[i, 1]],
                                                     c[, covs[i, 1]]))) < 10) {
                 if (Paired == FALSE)
-                    p1 = Permutation.Test(t[, covs[i, 1]], c[,
+                    p1 = PermutationTest(t[, covs[i, 1]], c[,
                                                              covs[i, 1]])
                 if (Paired == TRUE)
-                    p1 = Permutation.Test(t[, covs[i, 1]], c[,
+                    p1 = PermutationTest(t[, covs[i, 1]], c[,
                                                              covs[i, 1]], Paired = TRUE)
                 points(pch = 18, col = Point.Color, x = p1, y = aty)
             }
