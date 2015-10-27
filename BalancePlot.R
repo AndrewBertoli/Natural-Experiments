@@ -152,13 +152,13 @@ BalancePlot=function(Data, Treat, Covariates, Names.To.Print, Shade.Color = "bla
             if (length(o.sample) > 0) {
                 for (j in 1:length(Other.Tests)) {
                     fun = Other.Tests[[j]]
-                    px = as.numeric(fun(covs[i, 1]))
+                    px = as.numeric(fun(t[, covs[i, 1]], c[, covs[i, 1]]))
                     points(pch = pch[j], col = Observational.Point.Color,
                            x = px, y = aty)
                 }}
             for (z in 1:length(Other.Tests)) {
                 fun = Other.Tests[[z]]
-                px = as.numeric(fun(covs[i,1]))
+                px = as.numeric(fun(t[, covs[i, 1]], c[, covs[i, 1]]))
                 points(pch = pch[z], col = Point.Color, x = px,
                        y = aty)
             }
