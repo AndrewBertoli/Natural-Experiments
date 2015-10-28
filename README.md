@@ -8,6 +8,9 @@ RDPlot() creates a regression discontinuity graph with regression lines on eithe
 
 ### ![alt tag](https://cloud.githubusercontent.com/assets/7791421/7993424/e9b03a48-0aba-11e5-8ea3-78962dbf99e3.jpg)
 
+### FuzzyRD()
+
+FuzzyRD() creates two regression discontinuity graphs that illustrate the treatment effect for a fuzzy RD design. The first graph shows the relationship between the forcing variable and the treatment, and the second graph shows the relationship between the forcing variable and the outcome. The function also computes an estimated treatment effect and p-value for the fuzzy RD.
 
 ### Sens()
 
