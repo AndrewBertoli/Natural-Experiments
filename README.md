@@ -20,6 +20,6 @@ Sens() computes the p-values for different Gamma levels for paired or unpaired d
 
 This function shows the balance between the treatment and control groups by plotting the distrubtion of p-values for all of the covariates. By presenting the data in this way, it is easier to assess whether the p-values appear to be distrubed uniformly between 0 and 1, as would be expected in an experiment.
 
-### Permutation.Test()
+### PermutationTest()
 
 Permutation.Test computes p-values using Monte Carlo simulation under the sharp null hypothesis of no treatment effect.
