@@ -450,11 +450,11 @@ return(combined)
         if (Loc.p.value == "BL" & length(ylim) == 2) {
             location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[1])
         }
-        if (Loc.p.value == "TR" & length(ylim) == 1) {
+        if (Loc.p.value == "TL" & length(ylim) == 1) {
             location = c(xlim[1] + (xlim[2] - xlim[1])/20, max(dat[,
                 2]) - (max(dat[, 2]) - min(dat[, 2]))/25)
         }
-        if (Loc.p.value == "TR" & length(ylim) == 2) {
+        if (Loc.p.value == "TL" & length(ylim) == 2) {
             location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[2])
         }
         text(location[1], location[2], p.text, cex = 0.75)
