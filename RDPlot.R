@@ -474,23 +474,3 @@ return(output)
  
 }
 
-
-# Example
-
-library(rdrobust)
-
-op=par(mfrow=c(1,3), mar=c(4,4.1,3,0),oma=c(0,1,2,1))
-
-bw=rdbwselect(no.window$AGGBefore,no.window$PointsFromCutpoint,bwselect="IK")[[3]][1]
-
-RDPlot(X=no.window$PointsFromCutpoint,Y=no.window$AGGBefore,xlim=c(-3.6,3.6),ylim=c(-1.5,1.5), Main="Aggression Before", xlab="Points Above/Below Cut-Point",ylab="Militarized Interstate Disputes Initiated",Kernel="Triangular",Bandwidth=bw, Window=c(-2.5,2.5),NBoots=10000,cex.main=1.8,cex.lab=1.3)
-
-bw=rdbwselect(no.window$AGGAfter,no.window$PointsFromCutpoint,bwselect="IK")[[3]][1]
-
-RDPlot(X=no.window$PointsFromCutpoint,Y=no.window$AGGAfter,xlim=c(-3.6,3.6),ylim=c(-1.5,1.5), Main="Aggression After",xlab="Points Above/Below Cut-Point", ylab="",Kernel="Triangular", Bandwidth=bw, Window=c(-2.5,2.5),NBoots=10000,cex.main=1.8,cex.lab=1.3)
-
-bw=rdbwselect(no.window$AGGAfter-no.window$AGGBefore,no.window$PointsFromCutpoint,bwselect="IK")[[3]][1]
-
-RDPlot(X=no.window$PointsFromCutpoint,Y=no.window$AGGAfter-no.window$AGGBefore,xlim=c(-3.6,3.6),ylim=c(-1.5,1.5), Main="Change in Aggression", xlab="Points Above/Below Cut-Point", ylab="", Kernel="Triangular", Bandwidth=bw, Window=c(-2.5,2.5),NBoots=10000,cex.main=1.8,cex.lab=1.3)
-
-title("Figure 3. Change in Aggression for the World Cup",outer=TRUE,cex.main=2.5)
