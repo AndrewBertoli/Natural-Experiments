@@ -39,7 +39,7 @@ BalancePlot=function(Data, Treat, Covariates, Names.To.Print, Shade.Color = "bla
     mtext(text = c("Variable\nName", "Treatment\nMean", "Control\nMean"),
           side = 2, font = 2, line = c(varline + 2, tline + 1.2,
                                        cline + 0.53), adj = 0.5, las = 2, at = nrow(covs) +
-              1.18, cex = 0.7)
+              1.28, cex = 0.7)
     mtext(text = Title, side = 2, font = 2, line = -3, adj = 0.6,
           las = 2, at = nrow(covs) + 2.78, cex = Title.Size)
     for (i in 1:nrow(covs)) {

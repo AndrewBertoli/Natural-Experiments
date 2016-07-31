@@ -9,7 +9,7 @@ RDPlot=function (X, Y, C = 0, xlim = range(X), ylim = "Automatic", xlab = "Forci
         "red"), Raw.Data.Colors = c("lightblue", "pink"), Point.Size = 0.25,
     Shade.Color = "gray87", Window = "None", Plot.p.value = TRUE,
     Tick.Marks = c(-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3,
-        4, 5, 6, 7, 8), Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
+        4, 5, 6, 7, 8), Labels=NULL,Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
     Parametric = FALSE,Smoother="Kernel", Kernel=NULL
 , Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, Loc.p.value = "BR",...)
 {
@@ -421,7 +421,8 @@ return(combined)
         abline(v = Window[1], lty = 2)
         abline(v = Window[2], lty = 2)
     }
-    axis(1, at = Tick.Marks, labels = Tick.Marks)
+    if(length(Labels)>0){axis(1, at = Tick.Marks, labels = Labels}
+    if(length(Labels)==0){axis(1, at = Tick.Marks, labels = Tick.Marks}
     p = 2 * length(which(bootstrapmatrix2[which(bootstrapmatrix2[,
         1] == C), 2] - bootstrapmatrix1[which(bootstrapmatrix1[,
         1] == C), 2] < 0))/NBoots
