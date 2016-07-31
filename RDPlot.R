@@ -421,8 +421,8 @@ return(combined)
         abline(v = Window[1], lty = 2)
         abline(v = Window[2], lty = 2)
     }
-    if(length(Labels)>0){axis(1, at = Tick.Marks, labels = Labels}
-    if(length(Labels)==0){axis(1, at = Tick.Marks, labels = Tick.Marks}
+    if(length(Labels)>0){axis(1, at = Tick.Marks, labels = Labels)}
+    if(length(Labels)==0){axis(1, at = Tick.Marks, labels = Tick.Marks)}
     p = 2 * length(which(bootstrapmatrix2[which(bootstrapmatrix2[,
         1] == C), 2] - bootstrapmatrix1[which(bootstrapmatrix1[,
         1] == C), 2] < 0))/NBoots
