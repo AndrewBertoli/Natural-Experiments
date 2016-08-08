@@ -11,7 +11,7 @@ RDPlot=function (X, Y, C = 0, xlim = range(X), ylim = "Automatic", xlab = "Forci
     Tick.Marks = c(-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3,
         4, 5, 6, 7, 8), Labels=NULL,Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
     Parametric = FALSE,Smoother="Kernel", Kernel=NULL
-, Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, Loc.p.value = "BR",...)
+, Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, Confidence.Level=0.95, Type="Two-Sided", Loc.p.value = "BR",...)
 {
     if (length(Cluster) != 0 & Parametric == TRUE) {
         if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
@@ -269,9 +269,9 @@ return(combined)
         pointsforthatx = bootstrapmatrix1[bootstrapmatrix1[,
             1] == bootstrapmatrix1[i, 1], ]
         lowerreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.025, na.rm = TRUE))
+            2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
         upperreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.975, na.rm = TRUE))
+            2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
     }
     lowerreg = lowerreg[which(!is.na(lowerreg[, 2])), ]
     upperreg = upperreg[which(!is.na(upperreg[, 2])), ]
@@ -370,9 +370,9 @@ return(combined)
         pointsforthatx = bootstrapmatrix2[bootstrapmatrix2[,
             1] == bootstrapmatrix2[i, 1], ]
         lowerreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.025, na.rm = TRUE))
+            2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
         upperreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.975, na.rm = TRUE))
+            2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
     }
     lowerreg = lowerreg[which(!is.na(lowerreg[, 2])), ]
     upperreg = upperreg[which(!is.na(upperreg[, 2])), ]
@@ -426,7 +426,8 @@ return(combined)
     p = 2 * length(which(bootstrapmatrix2[which(bootstrapmatrix2[,
         1] == C), 2] - bootstrapmatrix1[which(bootstrapmatrix1[,
         1] == C), 2] < 0))/NBoots
-    if(p>1){p=2-p}    
+    if(p>1){p=2-p}   
+    if(Type=="One-Sided"){p=p/2} 
     p.text = paste("p=", signif(p, digits = 2), collapse = "")
     p.text = gsub("\\s", "", p.text)
     if (Plot.p.value == TRUE) {
