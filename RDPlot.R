@@ -101,7 +101,7 @@ if(length(X)<20){NBoots=10000}
 
 
 weight.function=function(v,p){
-if(length(Kernel)==0){Kernel="Tricube"}
+if(length(Kernel)==0){Kernel="Box"}
 if(Kernel=="Box"){return(rep(1,length(v)))}
 if(Kernel=="Triangular"){return(Bandwidth-abs(v-p))}
 if(Kernel=="Epanechnikov"){return(3/4(1-((v-p)/(Bandwidth))^2))}
@@ -151,8 +151,8 @@ design=cbind(1,obsx)
 obsy=y[x<(xs[k]+bw)&x>(xs[k]-bw)]
 if(length(unique(obsx))<=1){ys[k]=Y[which.min(abs(X-xs[k]))]}
 if(length(unique(obsx))>1){
-weights=diag(weight.function(design[,2],xs[k]))
-beta=solve(t(design)%*%weights%*%design)%*%t(design)%*%weights%*%obsy
+weights=weight.function(design[,2],xs[k])
+beta=summary(lm(obsy~obsx,weights=weights))$coefficients[1:2,1]
 ys[k]=beta[1]+beta[2]*xs[k]}
 }
 combined=data.frame(cbind(xs,ys))
@@ -179,8 +179,12 @@ if(length(unique(obsx))>(Poly.Order+1)){
 design=cbind(1,obsx,obsx^2,obsx^3,obsx^4,obsx^5,obsx^6,obsx^7,obsx^8,obsx^9)
 design=design[,1:(Poly.Order+1)]
 obsy=y[x<(xs[k]+bw)&x>(xs[k]-bw)]
-weights=diag(weight.function(design[,2],xs[k]))
-beta=solve(t(design)%*%weights%*%design)%*%t(design)%*%weights%*%obsy
+weights=weight.function(design[,2],xs[k])
+if(Poly.Order==1) beta=summary(lm(obsy~obsx,weights=weights))$coefficients[1:2,1]
+if(Poly.Order==2) beta=summary(lm(obsy~obsx+I(obsx^2),weights=weights))$coefficients[1:3,1]
+if(Poly.Order==3) beta=summary(lm(obsy~obsx+I(obsx^2)+I(obsx^3),weights=weights))$coefficients[1:4,1]
+if(Poly.Order==4) beta=summary(lm(obsy~obsx+I(obsx^2)+I(obsx^3)+I(obsx^4),weights=weights))$coefficients[1:5,1]
+if(Poly.Order==5) beta=summary(lm(obsy~obsx+I(obsx^2)+I(obsx^3)+I(obsx^4)+I(obsx^5),weights=weights))$coefficients[1:6,1]
 vect=c(1,xs[k],xs[k]^2,xs[k]^3,xs[k]^4,xs[k]^5,xs[k]^6,xs[k]^7,xs[k]^8,xs[k]^9)[1:(Poly.Order+1)]
 ys[k]=sum(beta*vect)}
 }
