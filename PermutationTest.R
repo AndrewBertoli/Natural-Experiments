@@ -3,9 +3,24 @@
 # If the treatment and control outcomes are the same length, users can specify whether the data is paired or unpaired.
 # This function is meant to be used in conjunction with BalancePlot()
 
-PermutationTest=function(Treatment, Control, Paired=FALSE, Simulations=10000, na.rm=FALSE, Output="p"){
+PermutationTest=function(Treatment, Control, Paired=FALSE, Simulations=500000, na.rm=FALSE, Output="p"){
+
+if(class(Treatment)=="formula"){
+Treat=as.character(Treatment)[3]
+Left=paste("+",as.character(Treatment)[2])
+Left=strsplit(Left," ")[[1]]
+plus=which(Left=="+")
+minus=which(Left=="-")
+variables_index=(1:length(Left))[-c(plus,minus)]
+outcome=0
+for(i in variables_index){
+outcome=Control[,Left[i]]*(2*as.numeric((i-1)%in%plus)-1)+outcome}
+Treatment=outcome[Control[,Treat]==1]
+Control=outcome[Control[,Treat]==0]}
 
 if(na.rm==FALSE){if(any(is.na(c(Treatment,Control)))==TRUE){return("NAs Detected. Must set na.rm=TRUE")}}
+
+
 
 if(Paired==TRUE){
 differences=Treatment-Control
@@ -34,5 +49,6 @@ pvalue=length(which(abs(new.t.stats)>=abs(mean(Treatment)-mean(Control))))/Simul
 est=mean(Treatment)-mean(Control)
 se=sd(new.t.stats)
 if(Output=="p") return(pvalue)
+n=length(c(Treatment,Control))
 
-if(Output=="full") return(cbind(paste("Estimate=",est,colapse=""),paste("Two-tailed p-value=",pvalue,colapse=""),paste("SE=",se,colapse="")))}
+if(Output=="full") return(cbind(paste("Estimate=",est,colapse=""),paste("Two-tailed p-value=",pvalue,colapse=""),paste("SE=",se,colapse=""),paste("n=",n,colapse="")))}
