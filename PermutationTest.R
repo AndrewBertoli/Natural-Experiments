@@ -34,7 +34,7 @@ pvalue=length(which(abs(new.t.stats)>=abs(mean(differences))))/Simulations
 }
 
 if(Paired==FALSE){
-treatmeant=Treatment[!is.na(Treatment)]
+Treatment=Treatment[!is.na(Treatment)]
 Control=Control[!is.na(Control)]
 new.t.stats=rep(0,Simulations)
 for(i in 1:Simulations){
