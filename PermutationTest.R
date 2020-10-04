@@ -51,4 +51,4 @@ se=sd(new.t.stats)
 if(output=="p") return(pvalue)
 n=length(c(Treatment,Control))
 
-if(output=="full") return(cbind(paste("Estimate=",est,colapse=""),paste("Two-tailed p-value=",pvalue,colapse=""),paste("SE=",se,colapse=""),paste("n=",n,colapse="")))}
+if(output=="full") return(cbind(paste("Estimate=",est,collapse=""),paste("Two-tailed p-value=",pvalue,collapse=""),paste("SE=",se,collapse=""),paste("n=",n,collapse="")))}
