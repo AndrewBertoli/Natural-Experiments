@@ -3,6 +3,7 @@
 # is binary. The function may take some time to run.
 
 random_sample_ci<-function(x_bar, sample_size, population_size){
+  if(x_bar<0|x_bar>1) return("x_bar must be between 0 and 1")
   p<-1
   possible_mu<-x_bar
   while(p>0.05){
