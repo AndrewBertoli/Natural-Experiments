@@ -1,0 +1,43 @@
+random_sample_ci<-function(x_bar, sample_size, population_size){
+  p<-1
+  possible_mu<-x_bar
+  while(p>0.05){
+    possible_mu<-possible_mu-0.01
+    pop<-c(rep(1, round(possible_mu*population_size)), 
+           rep(0,round((1-possible_mu)*population_size)))
+    
+    X_bar<-rep(NA, 100000)
+    
+    for(i in 1:100000){
+      samp<-sample(pop, 100)
+      X_bar[i]<-mean(samp)}
+    
+    dif<-abs(x_bar-possible_mu)
+    low<-possible_mu-dif
+    high<-possible_mu+dif
+    p<-mean(X_bar<=low | X_bar>=high)
+  }
+  lower<-possible_mu+0.01
+  
+  p<-1
+  possible_mu<-x_bar
+  while(p>0.05){
+    possible_mu<-possible_mu+0.01
+    pop<-c(rep(1, round(possible_mu*population_size)), 
+           rep(0,round((1-possible_mu)*population_size)))
+    
+    X_bar<-rep(NA, 100000)
+    
+    for(i in 1:100000){
+      samp<-sample(pop, 100)
+      X_bar[i]<-mean(samp)}
+    
+    dif<-abs(x_bar-possible_mu)
+    low<-possible_mu-dif
+    high<-possible_mu+dif
+    p<-mean(X_bar<=low | X_bar>=high)
+  }
+  upper<-possible_mu-0.01
+  line<-paste("Confidence Interval: ", 100*lower,"%-",100*upper,"%",sep="")
+  return(line)
+}
