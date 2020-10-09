@@ -1,3 +1,7 @@
+# Note: This function using Monte Carlos to estimate the confidence intervals
+# based on permutation inference for random sampling when the factor of interest
+# is binary. The function may take some time to run.
+
 random_sample_ci<-function(x_bar, sample_size, population_size){
   p<-1
   possible_mu<-x_bar
