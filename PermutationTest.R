@@ -3,7 +3,7 @@
 # If the treatment and control outcomes are the same length, users can specify whether the data is paired or unpaired.
 # This function is meant to be used in conjunction with BalancePlot()
 
-PermutationTest=function(Treatment, Control, paired=FALSE, simulations=500000, na.rm=FALSE, output="full"){
+PermutationTest=function(Treatment, Control, paired=FALSE, simulations=100000, na.rm=FALSE, output="full"){
 
 if(class(Treatment)=="formula"){
 Treat=as.character(Treatment)[3]
