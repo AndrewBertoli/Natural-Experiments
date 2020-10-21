@@ -55,5 +55,5 @@ se=sd(new.t.stats)
 if(output=="p") return(pvalue)
 n=length(c(Treatment,Control))
 
-if(output=="full"&form1==0) return(cbind(paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
+if(output=="full"&form1==0) return(cbind(paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))
 if(output=="full"&form1==1) return(cbind(paste("Group 1:",Treat,"=",Condition2,sep=""),paste("Group 2:",Treat,"=",Condition1,sep=""),paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
