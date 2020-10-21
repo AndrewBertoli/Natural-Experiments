@@ -15,8 +15,8 @@ variables_index=(1:length(Left))[-c(plus,minus)]
 outcome=0
 for(i in variables_index){
 outcome=Control[,Left[i]]*(2*as.numeric((i-1)%in%plus)-1)+outcome}
-treatment=outcome[Control[,Treat]==1]
-control=outcome[Control[,Treat]==0]}
+Treatment=outcome[Control[,Treat]==1]
+Control=outcome[Control[,Treat]==0]}
 
 if(na.rm==FALSE){if(any(is.na(c(Treatment,Control)))==TRUE){return("NAs Detected. Must set na.rm=TRUE")}}
 
