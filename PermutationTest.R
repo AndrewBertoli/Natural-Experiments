@@ -5,7 +5,9 @@
 
 PermutationTest=function(Treatment, Control, paired=FALSE, simulations=100000, na.rm=FALSE, output="full"){
 
+form_note<-0   
 if(class(Treatment)=="formula"){
+form_note<-1 
 Treat=as.character(Treatment)[3]
 Left=paste("+",as.character(Treatment)[2])
 Left=strsplit(Left," ")[[1]]
@@ -15,8 +17,10 @@ variables_index=(1:length(Left))[-c(plus,minus)]
 outcome=0
 for(i in variables_index){
 outcome=Control[,Left[i]]*(2*as.numeric((i-1)%in%plus)-1)+outcome}
-Treatment=outcome[Control[,Treat]==1]
-Control=outcome[Control[,Treat]==0]}
+Condition1<-sort(unique(Control[,Treat]))[1]
+Condition2<-sort(unique(Control[,Treat]))[2]  
+Treatment=outcome[Control[,Treat]==Condition2]
+Control=outcome[Control[,Treat]==Condition1]}
 
 if(na.rm==FALSE){if(any(is.na(c(Treatment,Control)))==TRUE){return("NAs Detected. Must set na.rm=TRUE")}}
 
@@ -51,4 +55,5 @@ se=sd(new.t.stats)
 if(output=="p") return(pvalue)
 n=length(c(Treatment,Control))
 
-if(output=="full") return(cbind(paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
+if(output=="full"&form1==0) return(cbind(paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
+if(output=="full"&form1==1) return(cbind(paste("Group 1:",Treat,"=",Condition2,sep=""),cbind(paste("Group 2:",Treat,"=",Condition1,sep=""),paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
