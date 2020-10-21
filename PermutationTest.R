@@ -15,8 +15,8 @@ variables_index=(1:length(Left))[-c(plus,minus)]
 outcome=0
 for(i in variables_index){
 outcome=Control[,Left[i]]*(2*as.numeric((i-1)%in%plus)-1)+outcome}
-Treatment=outcome[Control[,Treat]==1]
-Control=outcome[Control[,Treat]==0]}
+treatment=outcome[Control[,Treat]==1]
+control=outcome[Control[,Treat]==0]}
 
 if(na.rm==FALSE){if(any(is.na(c(Treatment,Control)))==TRUE){return("NAs Detected. Must set na.rm=TRUE")}}
 
@@ -51,4 +51,4 @@ se=sd(new.t.stats)
 if(output=="p") return(pvalue)
 n=length(c(Treatment,Control))
 
-if(output=="full") return(cbind(paste("Estimate=",est,sep=""),paste("Two-tailed p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
+if(output=="full") return(cbind(paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))}
