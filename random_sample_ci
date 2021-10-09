@@ -1,7 +1,3 @@
-# Note: This function using Monte Carlo to estimate the confidence intervals
-# based on permutation inference for random sampling when the factor of interest
-# is binary. The function may take some time to run.
-
 random_sample_ci<-function(x_bar, sample_size, population_size){
   if(x_bar<0|x_bar>1) return("x_bar must be between 0 and 1")
   p<-1
@@ -17,10 +13,10 @@ random_sample_ci<-function(x_bar, sample_size, population_size){
       samp<-sample(pop, sample_size)
       X_bar[i]<-mean(samp)}
     
-    dif<-abs(x_bar-possible_mu)
-    low<-possible_mu-dif
-    high<-possible_mu+dif
-    p<-mean(X_bar<=low | X_bar>=high)
+    dif<-abs(x_bar-possible_mu)-0.01
+    low_val<-possible_mu-dif
+    high_val<-possible_mu+dif
+    p<-mean(X_bar<low_val | X_bar>high_val)
   }
   lower<-possible_mu+0.01
   
@@ -37,10 +33,10 @@ random_sample_ci<-function(x_bar, sample_size, population_size){
       samp<-sample(pop, sample_size)
       X_bar[i]<-mean(samp)}
     
-    dif<-abs(x_bar-possible_mu)
-    low<-possible_mu-dif
-    high<-possible_mu+dif
-    p<-mean(X_bar<=low | X_bar>=high)
+    dif<-abs(x_bar-possible_mu)-0.01
+    low_val<-possible_mu-dif
+    high_val<-possible_mu+dif
+    p<-mean(X_bar<low_val | X_bar>high_val)
   }
   upper<-possible_mu-0.01
   line<-paste("Confidence Interval: ", 100*lower,"%-",100*upper,"%",sep="")
