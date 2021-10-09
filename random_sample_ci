@@ -14,7 +14,7 @@ random_sample_ci<-function(x_bar, sample_size, population_size){
     X_bar<-rep(NA, 100000)
     
     for(i in 1:100000){
-      samp<-sample(pop, 100)
+      samp<-sample(pop, sample_size)
       X_bar[i]<-mean(samp)}
     
     dif<-abs(x_bar-possible_mu)
@@ -34,7 +34,7 @@ random_sample_ci<-function(x_bar, sample_size, population_size){
     X_bar<-rep(NA, 100000)
     
     for(i in 1:100000){
-      samp<-sample(pop, 100)
+      samp<-sample(pop, sample_size)
       X_bar[i]<-mean(samp)}
     
     dif<-abs(x_bar-possible_mu)
