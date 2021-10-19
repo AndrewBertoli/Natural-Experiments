@@ -1,3 +1,5 @@
+# This function uses Monte Carlo simulation to search for the 95% confidence interval for a binary {0,1} variable.
+# The first argument, x_bar, is the sample average.
 random_sample_ci<-function(x_bar, sample_size, population_size){
   if(x_bar<0|x_bar>1) return("x_bar must be between 0 and 1")
   p<-1
