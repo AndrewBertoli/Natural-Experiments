@@ -4,45 +4,45 @@
 # For bandwidth choice, I recommend using the banwidth selection function rdbwselect() from the rdrobust package. 
 
 RDPlot=function (X, Y, C = 0, xlim = range(X), ylim = "Automatic", xlab = "Forcing Variable",
-    ylab = "Outcome", Main = "Regression Discontinuity Plot",Title.Size=20,
-    Plot.Means = TRUE, Plot.Raw.Data = FALSE,Raw.Data.Point.Density=0.6, Mean.Colors = c("blue",
-        "red"), Raw.Data.Colors = c("lightblue", "pink"),Line.Colors=c("black","black"), Point.Size = 0.25,
-    Shade.Color = "gray87", Window = "None", Plot.p.value = TRUE,
-    Tick.Marks = seq(-.2,.2,by=0.05),Labels=c("-20%","-15%","-10%","-5%","0%","5%","10%","15%","20%"),Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
-    Parametric = FALSE,Smoother="Kernel", Kernel=NULL
+ylab = "Outcome", Main = "Regression Discontinuity Plot",Title.Size=20,
+Plot.Means = TRUE, Plot.Raw.Data = FALSE,Raw.Data.Point.Density=0.6, Mean.Colors = c("blue",
+"red"), Raw.Data.Colors = c("lightblue", "pink"),Line.Colors=c("black","black"), Point.Size = 0.25,
+Shade.Color = "gray87", Window = "None", Plot.p.value = TRUE,
+ Tick.Marks = seq(-.2,.2,by=0.05),Labels=c("-20%","-15%","-10%","-5%","0%","5%","10%","15%","20%"),Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
+ Parametric = FALSE,Smoother="Kernel", Kernel=NULL
 , Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, Confidence.Level=0.95, Type="Two-Sided", Loc.p.value = "BR",Absolute.Y.Min=-10000000,Absolute.Y.Max=10000000,...)
 {
-    if (length(Cluster) != 0 & Parametric == TRUE) {
-        if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
-            max(table(as.vector(Cluster)))]) != length(unique(Cluster))) {
-            return("Clusters Must Be of Equal Size for Parametric Bootstrapping")
-        }
-    }
-    if (length(Breaks) == 1) {
-        Breaks = c(seq(min(X) - 1e-05, C, by = (C - min(X) +
-            1e-05)/10), seq(max(X)/10, max(X), by = max(X)/10))
-    }
-    bins = cut(X, breaks = Breaks)
-    dat = aggregate(Y ~ bins, FUN = mean)
-    midpoints = rep(0, length(Breaks) - 1)
-    for (i in 1:length(midpoints)) {
-        midpoints[i] = (Breaks[i] + Breaks[i + 1])/2
-    }
-    midpoints = midpoints[as.numeric(dat[[1]])]
-    negative.midpoints = midpoints[midpoints < C]
-    positive.midpoints = midpoints[midpoints > C]
-    pointsize = rep(0, length(Breaks) - 1)
-    for (i in 1:length(pointsize)) {
-        pointsize[i] = length(which(X > Breaks[i] & X <= Breaks[i +
-            1]))
-    }
-    pointsize = Point.Size * sqrt(pointsize[as.numeric(dat[[1]])])
-    if (length(ylim) == 1 & Plot.Raw.Data == TRUE) {
-        ylim = range(Y)
-    }
-    if (length(ylim) == 1 & Plot.Raw.Data == FALSE) {
-        ylim = range(dat[, 2])
-    }
+ if (length(Cluster) != 0 & Parametric == TRUE) {
+ if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
+ max(table(as.vector(Cluster)))]) != length(unique(Cluster))) {
+ return("Clusters Must Be of Equal Size for Parametric Bootstrapping")
+ }
+ }
+ if (length(Breaks) == 1) {
+ Breaks = c(seq(min(X) - 1e-05, C, by = (C - min(X) +
+ 1e-05)/10), seq(max(X)/10, max(X), by = max(X)/10))
+ }
+ bins = cut(X, breaks = Breaks)
+ dat = aggregate(Y ~ bins, FUN = mean)
+ midpoints = rep(0, length(Breaks) - 1)
+ for (i in 1:length(midpoints)) {
+ midpoints[i] = (Breaks[i] + Breaks[i + 1])/2
+ }
+ midpoints = midpoints[as.numeric(dat[[1]])]
+ negative.midpoints = midpoints[midpoints < C]
+ positive.midpoints = midpoints[midpoints > C]
+ pointsize = rep(0, length(Breaks) - 1)
+ for (i in 1:length(pointsize)) {
+ pointsize[i] = length(which(X > Breaks[i] & X <= Breaks[i +
+ 1]))
+ }
+ pointsize = Point.Size * sqrt(pointsize[as.numeric(dat[[1]])])
+ if (length(ylim) == 1 & Plot.Raw.Data == TRUE) {
+ ylim = range(Y)
+ }
+ if (length(ylim) == 1 & Plot.Raw.Data == FALSE) {
+ ylim = range(dat[, 2])
+ }
 
 
 if(NBoots=="Automatic"){
@@ -59,29 +59,29 @@ if(length(X)<20){NBoots=10000}
 }
 
 
-    bootstrapmatrix1 = matrix(0, nrow = 100 * NBoots, ncol = 2)
-    if (Parametric == FALSE) {
-        for (i in 1:NBoots) {
-            if (length(Cluster) == 0) {
-                randompoints = sample(seq(1, sum(X < C)), sum(X <
-                  C), replace = TRUE)
-                new.X = X[X < C][randompoints]
-                new.Y = Y[X < C][randompoints]
-            }
-            if (length(Cluster) != 0) {
-                randomClusters = sample(unique(Cluster[X < C]),
-                  length(unique(Cluster[X < C])), replace = TRUE)
-                new.X = c()
-                for (j in 1:length(randomClusters)) {
-                  new.X = c(new.X, X[X < C][Cluster[X < C] ==
-                    randomClusters[j]])
-                }
-                new.Y = c()
-                for (j in 1:length(randomClusters)) {
-                  new.Y = c(new.Y, Y[X < C][Cluster[X < C] ==
-                    randomClusters[j]])
-                }
-            }
+ bootstrapmatrix1 = matrix(0, nrow = 100 * NBoots, ncol = 2)
+ if (Parametric == FALSE) {
+ for (i in 1:NBoots) {
+ if (length(Cluster) == 0) {
+ randompoints = sample(seq(1, sum(X < C)), sum(X <
+ C), replace = TRUE)
+ new.X = X[X < C][randompoints]
+ new.Y = Y[X < C][randompoints]
+ }
+ if (length(Cluster) != 0) {
+ randomClusters = sample(unique(Cluster[X < C]),
+ length(unique(Cluster[X < C])), replace = TRUE)
+ new.X = c()
+ for (j in 1:length(randomClusters)) {
+ new.X = c(new.X, X[X < C][Cluster[X < C] ==
+ randomClusters[j]])
+ }
+ new.Y = c()
+ for (j in 1:length(randomClusters)) {
+ new.Y = c(new.Y, Y[X < C][Cluster[X < C] ==
+ randomClusters[j]])
+ }
+ }
 
 
 
@@ -179,7 +179,7 @@ return(combined)
 }}
 
 
-            regression = smoother(new.X, new.Y,c=C,bw=Bandwidth)
+ regression = smoother(new.X, new.Y,c=C,bw=Bandwidth)
 
 
 
@@ -187,83 +187,83 @@ return(combined)
 
 
 
-            bootstrapmatrix1[(1 + (100 * (i - 1))):(100 * i),
-                1:2] = cbind(regression$x, regression$y)
+ bootstrapmatrix1[(1 + (100 * (i - 1))):(100 * i),
+ 1:2] = cbind(regression$x, regression$y)
 
-        }
-    }
-    if (Parametric == TRUE) {
-        get.resid = function(x, y, x.close, y.hat) {
-            return(y - y.hat[which.min(abs(x - x.close))])
-        }
-
-
-
-        regression = smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)
+ }
+ }
+ if (Parametric == TRUE) {
+ get.resid = function(x, y, x.close, y.hat) {
+ return(y - y.hat[which.min(abs(x - x.close))])
+ }
 
 
-        residuals = rep(0, length(X[X < C]))
-        for (i in 1:sum(X < C)) {
-            residuals[i] = get.resid(X[X < C][i], Y[X < C][i],
-                regression$x, regression$y)
-        }
-        for (i in 1:NBoots) {
-            if (length(Cluster) == 0) {
-                randompoints = sample(seq(1, sum(X < C)), sum(X <
-                  C), replace = TRUE)
-                new.X = X[X < C]
-                new.Y = rep(0, sum(X < C))
-                for (k in 1:sum(X < C)) {
-                  new.Y[k] = regression$y[which.min(abs(X[X <
-                    C][k] - regression$x))] + residuals[randompoints[k]]
-                }
-            }
-            if (length(Cluster) != 0) {
-                if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
-                  max(table(as.vector(Cluster)))]) == length(unique(Cluster))) {
-                  new.X = X[X < C]
-                  randomClusters = sample(unique(Cluster[X <
-                    C]), length(unique(Cluster[X < C])), replace = TRUE)
-                  new.residuals = c()
-                  for (j in 1:length(randomClusters)) {
-                    new.residuals = c(new.residuals, residuals[Cluster[X <
-                      C] == randomClusters[j]])
-                  }
-                  new.residuals = sample(new.residuals, length(new.residuals))
-                  new.Y = rep(0, sum(X < C))
-                  for (k in 1:sum(X < C)) {
-                    new.Y[k] = regression$y[which.min(abs(X[X <
-                      C][k] - regression$x))] + new.residuals[k]
-                  }
-                }
-            }
+
+ regression = smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)
 
 
+ residuals = rep(0, length(X[X < C]))
+ for (i in 1:sum(X < C)) {
+ residuals[i] = get.resid(X[X < C][i], Y[X < C][i],
+ regression$x, regression$y)
+ }
+ for (i in 1:NBoots) {
+ if (length(Cluster) == 0) {
+ randompoints = sample(seq(1, sum(X < C)), sum(X <
+ C), replace = TRUE)
+ new.X = X[X < C]
+ new.Y = rep(0, sum(X < C))
+ for (k in 1:sum(X < C)) {
+ new.Y[k] = regression$y[which.min(abs(X[X <
+ C][k] - regression$x))] + residuals[randompoints[k]]
+ }
+ }
+ if (length(Cluster) != 0) {
+ if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
+ max(table(as.vector(Cluster)))]) == length(unique(Cluster))) {
+ new.X = X[X < C]
+ randomClusters = sample(unique(Cluster[X <
+ C]), length(unique(Cluster[X < C])), replace = TRUE)
+ new.residuals = c()
+ for (j in 1:length(randomClusters)) {
+ new.residuals = c(new.residuals, residuals[Cluster[X <
+ C] == randomClusters[j]])
+ }
+ new.residuals = sample(new.residuals, length(new.residuals))
+ new.Y = rep(0, sum(X < C))
+ for (k in 1:sum(X < C)) {
+ new.Y[k] = regression$y[which.min(abs(X[X <
+ C][k] - regression$x))] + new.residuals[k]
+ }
+ }
+ }
 
 
 
 
-            regression2 = smoother(new.X, new.Y,c=C,bw=Bandwidth)
+
+
+ regression2 = smoother(new.X, new.Y,c=C,bw=Bandwidth)
 
 
 
 
-            bootstrapmatrix1[(1 + (100 * (i - 1))):(100 * i),
-                1:2] = cbind(regression2$x, regression2$y)
-        }
-    }
-    lowerreg = cbind(bootstrapmatrix1[1:100, ])
-    upperreg = cbind(bootstrapmatrix1[1:100, ])
-    for (i in 1:100) {
-        pointsforthatx = bootstrapmatrix1[bootstrapmatrix1[,
-            1] == bootstrapmatrix1[i, 1], ]
-        lowerreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
-        upperreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
-    }
-    lowerreg = lowerreg[which(!is.na(lowerreg[, 2])), ]
-    upperreg = upperreg[which(!is.na(upperreg[, 2])), ]
+ bootstrapmatrix1[(1 + (100 * (i - 1))):(100 * i),
+ 1:2] = cbind(regression2$x, regression2$y)
+ }
+ }
+ lowerreg = cbind(bootstrapmatrix1[1:100, ])
+ upperreg = cbind(bootstrapmatrix1[1:100, ])
+ for (i in 1:100) {
+ pointsforthatx = bootstrapmatrix1[bootstrapmatrix1[,
+ 1] == bootstrapmatrix1[i, 1], ]
+ lowerreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
+ 2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
+ upperreg[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
+ 2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
+ }
+ lowerreg = lowerreg[which(!is.na(lowerreg[, 2])), ]
+ upperreg = upperreg[which(!is.na(upperreg[, 2])), ]
 
 lowerreg[,2][lowerreg[,2]<Absolute.Y.Min]=Absolute.Y.Min
 upperreg[,2][upperreg[,2]>Absolute.Y.Max]=Absolute.Y.Max
@@ -274,102 +274,102 @@ upperreg[,2][upperreg[,2]>Absolute.Y.Max]=Absolute.Y.Max
 
 
 
-    bootstrapmatrix2 = matrix(0, nrow = 100 * NBoots, ncol = 2)
-    if (Parametric == FALSE) {
-        for (i in 1:NBoots) {
-            if (length(Cluster) == 0) {
-                randompoints = sample(seq(1, sum(X > C)), sum(X >
-                  C), replace = TRUE)
-                new.X = X[X > C][randompoints]
-                new.Y = Y[X > C][randompoints]
-            }
-            if (length(Cluster) != 0) {
-                randomClusters = sample(unique(Cluster[X > C]),
-                  length(unique(Cluster[X > C])), replace = TRUE)
-                new.X = c()
-                for (j in 1:length(randomClusters)) {
-                  new.X = c(new.X, X[X > C][Cluster[X > C] ==
-                    randomClusters[j]])
-                }
-                new.Y = c()
-                for (j in 1:length(randomClusters)) {
-                  new.Y = c(new.Y, Y[X > C][Cluster[X > C] ==
-                    randomClusters[j]])
-                }
-            }
+ bootstrapmatrix2 = matrix(0, nrow = 100 * NBoots, ncol = 2)
+ if (Parametric == FALSE) {
+ for (i in 1:NBoots) {
+ if (length(Cluster) == 0) {
+ randompoints = sample(seq(1, sum(X > C)), sum(X >
+ C), replace = TRUE)
+ new.X = X[X > C][randompoints]
+ new.Y = Y[X > C][randompoints]
+ }
+ if (length(Cluster) != 0) {
+ randomClusters = sample(unique(Cluster[X > C]),
+ length(unique(Cluster[X > C])), replace = TRUE)
+ new.X = c()
+ for (j in 1:length(randomClusters)) {
+ new.X = c(new.X, X[X > C][Cluster[X > C] ==
+ randomClusters[j]])
+ }
+ new.Y = c()
+ for (j in 1:length(randomClusters)) {
+ new.Y = c(new.Y, Y[X > C][Cluster[X > C] ==
+ randomClusters[j]])
+ }
+ }
 
 
 
 
-                regression = smoother(new.X, new.Y, c=C, bw=Bandwidth)
+ regression = smoother(new.X, new.Y, c=C, bw=Bandwidth)
 
 
 
-            bootstrapmatrix2[(1 + (100 * (i - 1))):(100 * i),
-                1:2] = cbind(regression$x, regression$y)
-        }
-    }
-    if (Parametric == TRUE) {
-        get.resid = function(x, y, x.close, y.hat) {
-            return(y - y.hat[which.min(abs(x - x.close))])
-        }
+ bootstrapmatrix2[(1 + (100 * (i - 1))):(100 * i),
+ 1:2] = cbind(regression$x, regression$y)
+ }
+ }
+ if (Parametric == TRUE) {
+ get.resid = function(x, y, x.close, y.hat) {
+ return(y - y.hat[which.min(abs(x - x.close))])
+ }
 
-     regression2 = smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)
-
-
-        residuals = rep(0, length(X[X > C]))
-        for (i in 1:sum(X > C)) {
-            residuals[i] = get.resid(X[X > C][i], Y[X > C][i],
-                regression$x, regression$y)
-        }
-        for (i in 1:NBoots) {
-            if (length(Cluster) == 0) {
-                randompoints = sample(seq(1, sum(X > C)), sum(X >
-                  C), replace = TRUE)
-                new.X = X[X > C]
-                new.Y = rep(0, sum(X > C))
-                for (k in 1:sum(X > C)) {
-                  new.Y[k] = regression$y[which.min(abs(X[X >
-                    C][k] - regression$x))] + residuals[randompoints[k]]
-                }
-            }
-            if (length(Cluster) != 0) {
-                new.X = X[X < C]
-                randomClusters = sample(unique(Cluster[X > C]),
-                  length(unique(Cluster[X > C])), replace = TRUE)
-                new.residuals = c()
-                for (j in 1:length(randomClusters)) {
-                  new.residuals = c(new.residuals, residuals[Cluster[X >
-                    C] == randomClusters[j]])
-                }
-                new.residuals = sample(new.residuals, length(new.residuals))
-                new.Y = rep(0, sum(X > C))
-                for (k in 1:sum(X > C)) {
-                  new.Y[k] = regression$y[which.min(abs(X[X >
-                    C][k] - regression$x))] + new.residuals[k]
-                }
-            }
-
-            regression2 = smoother(new.X, new.Y,c=C,bw=Bandwidth)
+ regression2 = smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)
 
 
+ residuals = rep(0, length(X[X > C]))
+ for (i in 1:sum(X > C)) {
+ residuals[i] = get.resid(X[X > C][i], Y[X > C][i],
+ regression$x, regression$y)
+ }
+ for (i in 1:NBoots) {
+ if (length(Cluster) == 0) {
+ randompoints = sample(seq(1, sum(X > C)), sum(X >
+ C), replace = TRUE)
+ new.X = X[X > C]
+ new.Y = rep(0, sum(X > C))
+ for (k in 1:sum(X > C)) {
+ new.Y[k] = regression$y[which.min(abs(X[X >
+ C][k] - regression$x))] + residuals[randompoints[k]]
+ }
+ }
+ if (length(Cluster) != 0) {
+ new.X = X[X < C]
+ randomClusters = sample(unique(Cluster[X > C]),
+ length(unique(Cluster[X > C])), replace = TRUE)
+ new.residuals = c()
+ for (j in 1:length(randomClusters)) {
+ new.residuals = c(new.residuals, residuals[Cluster[X >
+ C] == randomClusters[j]])
+ }
+ new.residuals = sample(new.residuals, length(new.residuals))
+ new.Y = rep(0, sum(X > C))
+ for (k in 1:sum(X > C)) {
+ new.Y[k] = regression$y[which.min(abs(X[X >
+ C][k] - regression$x))] + new.residuals[k]
+ }
+ }
 
-            bootstrapmatrix2[(1 + (100 * (i - 1))):(100 * i),
-                1:2] = cbind(regression2$x, regression2$y)
-        }
-    }
-    lowerreg2 = cbind(bootstrapmatrix2[1:100, ])
-    upperreg2 = cbind(bootstrapmatrix2[1:100, ])
-    for (i in 1:100) {
-        pointsforthatx = bootstrapmatrix2[bootstrapmatrix2[,
-            1] == bootstrapmatrix2[i, 1], ]
-        lowerreg2[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
-        upperreg2[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
-            2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
-    }
-    lowerreg2 = lowerreg2[which(!is.na(lowerreg2[, 2])), ]
-    upperreg2 = upperreg2[which(!is.na(upperreg2[, 2])), ]
+ regression2 = smoother(new.X, new.Y,c=C,bw=Bandwidth)
+
+
+
+ bootstrapmatrix2[(1 + (100 * (i - 1))):(100 * i),
+ 1:2] = cbind(regression2$x, regression2$y)
+ }
+ }
+ lowerreg2 = cbind(bootstrapmatrix2[1:100, ])
+ upperreg2 = cbind(bootstrapmatrix2[1:100, ])
+ for (i in 1:100) {
+ pointsforthatx = bootstrapmatrix2[bootstrapmatrix2[,
+ 1] == bootstrapmatrix2[i, 1], ]
+ lowerreg2[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
+ 2], prob = (1-Confidence.Level)/2, na.rm = TRUE))
+ upperreg2[i, 1:2] = c(pointsforthatx[1, 1], quantile(pointsforthatx[,
+ 2], prob = 0.5+Confidence.Level/2, na.rm = TRUE))
+ }
+ lowerreg2 = lowerreg2[which(!is.na(lowerreg2[, 2])), ]
+ upperreg2 = upperreg2[which(!is.na(upperreg2[, 2])), ]
 
 lowerreg2[,2][lowerreg2[,2]<Absolute.Y.Min]=Absolute.Y.Min
 upperreg2[,2][upperreg2[,2]>Absolute.Y.Max]=Absolute.Y.Max
@@ -384,7 +384,7 @@ y2[y2<Absolute.Y.Min]=Absolute.Y.Min
 y2[y2>Absolute.Y.Max]=Absolute.Y.Max
 
 
-    if (Plot.Raw.Data == TRUE & Jitter == FALSE) {
+ if (Plot.Raw.Data == TRUE & Jitter == FALSE) {
 	
 plot=ggplot()+geom_point(aes_string(x=X[X < C],y=Y[X < C]),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density)+xlab(xlab)+ylab(ylab)+xlim(xlim)+ylim(ylim)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes_string(x=X[X > C],y=Y[X > C]),colour=Raw.Data.Colors[2],alpha=Raw.Data.Point.Density)+
 
@@ -396,14 +396,14 @@ geom_line(aes_string(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),c
 
 scale_x_continuous(breaks=Tick.Marks,labels=Labels,limits=range(Tick.Marks))
 
-    }
-    if (Plot.Raw.Data == TRUE & Jitter == TRUE) {
-        JX = jitter(X[X < C])
-        JX[JX > C] = 2 * C - JX[JX > C]
-        X[X < C] = JX
-        JX = jitter(X[X > C])
-        JX[JX < C] = 2 * C - JX[JX < C]
-        X[X > C] = JX
+ }
+ if (Plot.Raw.Data == TRUE & Jitter == TRUE) {
+ JX = jitter(X[X < C])
+ JX[JX > C] = 2 * C - JX[JX > C]
+ X[X < C] = JX
+ JX = jitter(X[X > C])
+ JX[JX < C] = 2 * C - JX[JX < C]
+ X[X > C] = JX
 
 plot=ggplot()+geom_point(aes(X[X < C],jitter(Y[X < C])),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density)+xlab(xlab)+ylab(ylab)+xlim(xlim)+ylim(ylim)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(X[X > C],jitter(Y[X > C])),colour=Raw.Data.Colors[2],alpha=Raw.Data.Point.Density)+
 
@@ -417,8 +417,8 @@ scale_x_continuous(breaks=Tick.Marks,labels=Labels,limits=range(Tick.Marks))
 
 
 
-    }
-    if (Plot.Means == TRUE) {
+ }
+ if (Plot.Means == TRUE) {
 
 
 
@@ -436,54 +436,54 @@ scale_x_continuous(breaks=Tick.Marks,labels=Labels,limits=range(Tick.Marks))
 }
 
 
-    estimate=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[2][[1]][smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[1][[1]]==C]-smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[2][[1]][smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[1][[1]]==C]
+ estimate=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[2][[1]][smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[1][[1]]==C]-smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[2][[1]][smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[1][[1]]==C]
 
-#    if (length(Window) == 2) {
-#        abline(v = Window[1], lty = 2)
-#        abline(v = Window[2], lty = 2)
-#    }
-   # if(length(Labels)>0){axis(1, at = Tick.Marks, labels = Labels)}
+# if (length(Window) == 2) {
+# abline(v = Window[1], lty = 2)
+# abline(v = Window[2], lty = 2)
+# }
+# if(length(Labels)>0){axis(1, at = Tick.Marks, labels = Labels)}
    # if(length(Labels)==0){axis(1, at = Tick.Marks, labels = Tick.Marks)}
-    p = 2 * length(which(bootstrapmatrix2[which(bootstrapmatrix2[,
-        1] == C), 2] - bootstrapmatrix1[which(bootstrapmatrix1[,
-        1] == C), 2] < 0))/NBoots
-    if(p>1){p=2-p}   
-    if(Type=="One-Sided"){p=p/2} 
-    p.text = paste("p=", signif(p, digits = 2), collapse = "")
-    p.text = gsub("\\s", "", p.text)
-    if (Plot.p.value == TRUE) {
-        if (Loc.p.value == "BR" & length(ylim) == 1) {
-            location = c(xlim[2] - (xlim[2] - xlim[1])/20, min(dat[,
-                2]) + (max(dat[, 2]) - min(dat[, 2]))/25)
-        }
-        if (Loc.p.value == "BR" & length(ylim) == 2) {
-            location = c(xlim[2] - (xlim[2] - xlim[1])/20, y = ylim[1])
-        }
-        if (Loc.p.value == "TR" & length(ylim) == 1) {
-            location = c(xlim[2] - (xlim[2] - xlim[1])/20, max(dat[,
-                2]) - (max(dat[, 2]) - min(dat[, 2]))/25)
-        }
-        if (Loc.p.value == "TR" & length(ylim) == 2) {
-            location = c(xlim[2] - (xlim[2] - xlim[1])/20, y = ylim[2])
-        }
-        if (Loc.p.value == "BL" & length(ylim) == 1) {
-            location = c(xlim[1] + (xlim[2] - xlim[1])/20, min(dat[,
-                2]) + (max(dat[, 2]) - min(dat[, 2]))/25)
-        }
-        if (Loc.p.value == "BL" & length(ylim) == 2) {
-            location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[1])
-        }
-        if (Loc.p.value == "TL" & length(ylim) == 1) {
-            location = c(xlim[1] + (xlim[2] - xlim[1])/20, max(dat[,
-                2]) - (max(dat[, 2]) - min(dat[, 2]))/25)
-        }
-        if (Loc.p.value == "TL" & length(ylim) == 2) {
-            location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[2])
-        }
-        text(location[1], location[2], p.text, cex = 0.75)
-    }
-  output=list(estimate,signif(p, digits = 2))
-  names(output)=c("Estimate","p.value")
+ p = 2 * length(which(bootstrapmatrix2[which(bootstrapmatrix2[,
+ 1] == C), 2] - bootstrapmatrix1[which(bootstrapmatrix1[,
+ 1] == C), 2] < 0))/NBoots
+ if(p>1){p=2-p} 
+    if(Type=="One-Sided"){p=p/2}
+ p.text = paste("p=", signif(p, digits = 2), collapse = "")
+ p.text = gsub("\\s", "", p.text)
+ if (Plot.p.value == TRUE) {
+ if (Loc.p.value == "BR" & length(ylim) == 1) {
+ location = c(xlim[2] - (xlim[2] - xlim[1])/20, min(dat[,
+ 2]) + (max(dat[, 2]) - min(dat[, 2]))/25)
+ }
+ if (Loc.p.value == "BR" & length(ylim) == 2) {
+ location = c(xlim[2] - (xlim[2] - xlim[1])/20, y = ylim[1])
+ }
+ if (Loc.p.value == "TR" & length(ylim) == 1) {
+ location = c(xlim[2] - (xlim[2] - xlim[1])/20, max(dat[,
+ 2]) - (max(dat[, 2]) - min(dat[, 2]))/25)
+ }
+ if (Loc.p.value == "TR" & length(ylim) == 2) {
+ location = c(xlim[2] - (xlim[2] - xlim[1])/20, y = ylim[2])
+ }
+ if (Loc.p.value == "BL" & length(ylim) == 1) {
+ location = c(xlim[1] + (xlim[2] - xlim[1])/20, min(dat[,
+ 2]) + (max(dat[, 2]) - min(dat[, 2]))/25)
+ }
+ if (Loc.p.value == "BL" & length(ylim) == 2) {
+ location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[1])
+ }
+ if (Loc.p.value == "TL" & length(ylim) == 1) {
+ location = c(xlim[1] + (xlim[2] - xlim[1])/20, max(dat[,
+ 2]) - (max(dat[, 2]) - min(dat[, 2]))/25)
+ }
+ if (Loc.p.value == "TL" & length(ylim) == 2) {
+ location = c(xlim[1] + (xlim[2] - xlim[1])/20, y = ylim[2])
+ }
+ #text(location[1], location[2], p.text, cex = 0.75)
+ }
+ output=list(estimate,signif(p, digits = 2))
+ names(output)=c("Estimate","p.value")
 
 if(NBoots<10000){print(paste("To increase the precision of the p-value, increase the number of bootstrapped samples. Currently, NBoots =",NBoots))}
 
@@ -493,7 +493,7 @@ if(sum(X==C)>0){print("Note: Some observations are on the cut-point. These units
 
 
 print(output)
- 
+
 plot
 
 }
