@@ -53,6 +53,7 @@ pvalue=length(which(abs(new.t.stats)>=abs(mean(Treatment)-mean(Control))))/simul
 est=mean(Treatment)-mean(Control)
 se=sd(new.t.stats)
 if(output=="p") return(pvalue)
+if(output=="short") return(c(est,se,pvalue))  
 n=length(c(Treatment,Control))
 
 if(output=="full"&form_note==0) return(cbind(paste("Group 1 Mean=",mean(Treatment),sep=""),paste("Group 2 Mean=",mean(Control),sep=""),paste("Estimate=",est,sep=""),paste("p-value=",pvalue,sep=""),paste("SE=",se,sep=""),paste("n=",n,sep="")))
