@@ -3,14 +3,15 @@
 # or binned means, which smoother and kernel to use, and where to set the bandwidth. 
 # For bandwidth choice, I recommend using the banwidth selection function rdbwselect() from the rdrobust package. 
 
-RDPlot=function (X, Y, C = 0, xlim = range(X), ylim = "Automatic", xlab = "Forcing Variable",
+RDPlot=function (X, Y, C = 0, xlab = "Forcing Variable",
 ylab = "Outcome", Main = "Regression Discontinuity Plot",Title.Size=20,
 Plot.Means = TRUE, Plot.Raw.Data = FALSE,Raw.Data.Point.Size=4,Raw.Data.Point.Density=0.6, Mean.Colors = c("blue",
 "red"), Raw.Data.Colors = c("lightblue", "pink"),Line.Colors=c("black","black"), Point.Size = 4,
 Shade.Color = "gray87", Window = "None", Plot.p.value = TRUE,
- Tick.Marks = seq(-.2,.2,by=0.05),Labels=c("-20%","-15%","-10%","-5%","0%","5%","10%","15%","20%"),Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
- Parametric = FALSE,Smoother="Kernel", Kernel=NULL
-, Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, Confidence.Level=0.95, Type="Two-Sided", Loc.p.value = "BR",Absolute.Y.Min=-10000000,Absolute.Y.Max=10000000,...)
+Tick.Marks = seq(-.2,.2,by=0.05),Labels=c("-20%","-15%","-10%","-5%","0%","5%","10%","15%","20%"),
+xlim = range(Tick.Marks), ylim = "Automatic", Bandwidth = 2, NBoots = "Automatic", Breaks = "Automatic",
+Parametric = FALSE,Smoother="Kernel", Kernel=NULL, Poly.Order=NULL, Cluster = NULL, Jitter = FALSE, 
+Confidence.Level=0.95, Type="Two-Sided", Loc.p.value = "BR",Absolute.Y.Min=-10000000,Absolute.Y.Max=10000000,...)
 {
  if (length(Cluster) != 0 & Parametric == TRUE) {
  if (length(names(table(as.vector(Cluster)))[table(as.vector(Cluster)) ==
@@ -386,7 +387,7 @@ y2[y2>Absolute.Y.Max]=Absolute.Y.Max
 
  if (Plot.Raw.Data == TRUE & Jitter == FALSE) {
 	
-plot=ggplot()+geom_point(aes_string(x=X[X < C],y=Y[X < C]),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density,size=Raw.Data.Point.Size)+xlab(xlab)+ylab(ylab)+xlim(xlim)+ylim(ylim)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes_string(x=X[X > C],y=Y[X > C]),colour=Raw.Data.Colors[2],size=Raw.Data.Point.Size,alpha=Raw.Data.Point.Density)+
+plot=ggplot()+geom_point(aes_string(x=X[X < C],y=Y[X < C]),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density,size=Raw.Data.Point.Size)+xlab(xlab)+ylab(ylab)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes_string(x=X[X > C],y=Y[X > C]),colour=Raw.Data.Colors[2],size=Raw.Data.Point.Size,alpha=Raw.Data.Point.Density)+
 
 geom_ribbon(aes_string(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
 
@@ -394,7 +395,7 @@ geom_ribbon(aes_string(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),co
 
 geom_line(aes_string(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes_string(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
 
-scale_x_continuous(breaks=Tick.Marks,labels=Labels,limits=range(Tick.Marks))
+scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xlim, ylim = ylim)
 
  }
  if (Plot.Raw.Data == TRUE & Jitter == TRUE) {
