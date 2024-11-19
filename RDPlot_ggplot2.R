@@ -422,7 +422,7 @@ scale_x_continuous(breaks=Tick.Marks,labels=Labels,limits=range(Tick.Marks))
 
 
 
-plot=ggplot()+geom_point(aes(negative.midpoints,dat[, 2][midpoints < C]),size=pointsize[midpoints < C],colour=Mean.Colors[1])+xlab(xlab)+ylab(ylab)+xlim(xlim)+ylim(ylim)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(positive.midpoints,dat[, 2][midpoints > C]),size=pointsize[midpoints > C],colour=Mean.Colors[2])+
+plot=ggplot()+geom_point(aes(negative.midpoints,dat[, 2][midpoints < C]),size=pointsize[midpoints < C],colour=Mean.Colors[1])+xlab(xlab)+ylab(ylab)+ylim(ylim)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(positive.midpoints,dat[, 2][midpoints > C]),size=pointsize[midpoints > C],colour=Mean.Colors[2])+
 
 
 geom_ribbon(aes_string(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
