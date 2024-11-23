@@ -387,13 +387,13 @@ y2[y2>Absolute.Y.Max]=Absolute.Y.Max
 
  if (Plot.Raw.Data == TRUE & Jitter == FALSE) {
 	
-plot=ggplot()+geom_point(aes_string(x=X[X < C],y=Y[X < C]),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density,size=Raw.Data.Point.Size)+xlab(xlab)+ylab(ylab)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes_string(x=X[X > C],y=Y[X > C]),colour=Raw.Data.Colors[2],size=Raw.Data.Point.Size,alpha=Raw.Data.Point.Density)+
+plot=ggplot()+geom_point(aes(x=X[X < C],y=Y[X < C]),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density,size=Raw.Data.Point.Size)+xlab(xlab)+ylab(ylab)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(x=X[X > C],y=Y[X > C]),colour=Raw.Data.Colors[2],size=Raw.Data.Point.Size,alpha=Raw.Data.Point.Density)+
 
-geom_ribbon(aes_string(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
 
-geom_ribbon(aes_string(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
 
-geom_line(aes_string(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes_string(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
+geom_line(aes(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
 
 scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xlim, ylim = ylim)
 
@@ -408,11 +408,11 @@ scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xli
 
 plot=ggplot()+geom_point(aes(X[X < C],jitter(Y[X < C])),colour=Raw.Data.Colors[1],alpha=Raw.Data.Point.Density,size=Raw.Data.Point.Size)+xlab(xlab)+ylab(ylab)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(X[X > C],jitter(Y[X > C])),colour=Raw.Data.Colors[2],size=Raw.Data.Point.Size,alpha=Raw.Data.Point.Density)+
 
-geom_ribbon(aes_string(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
 
-geom_ribbon(aes_string(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
 
-geom_line(aes_string(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes_string(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
+geom_line(aes(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
 
 scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xlim, ylim = ylim)
 
@@ -426,11 +426,11 @@ scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xli
 plot=ggplot()+geom_point(aes(negative.midpoints,dat[, 2][midpoints < C]),size=pointsize[midpoints < C],colour=Mean.Colors[1])+xlab(xlab)+ylab(ylab)+ggtitle(Main)+theme(legend.position="none",plot.title = element_text(size=Title.Size))+geom_point(aes(positive.midpoints,dat[, 2][midpoints > C]),size=pointsize[midpoints > C],colour=Mean.Colors[2])+
 
 
-geom_ribbon(aes_string(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg[,1],ymin=lowerreg[,2],ymax=upperreg[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg[,1],y=lowerreg[,2]),linetype="dashed")+geom_line(aes(x=upperreg[,1],y=upperreg[,2]),linetype="dashed")+
 
-geom_ribbon(aes_string(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes_string(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes_string(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
+geom_ribbon(aes(x=upperreg2[,1],ymin=lowerreg2[,2],ymax=upperreg2[,2]),colour="gray",alpha=0.2)+# geom_line(aes(x=lowerreg2[,1],y=lowerreg2[,2]),linetype="dashed")+geom_line(aes(x=upperreg2[,1],y=upperreg2[,2]),linetype="dashed")+
 
-geom_line(aes_string(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes_string(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
+geom_line(aes(x=smoother(X[X < C], Y[X < C],c=C,bw=Bandwidth)[,1],y=y1),colour=Line.Colors[1])+geom_line(aes(x=smoother(X[X > C], Y[X > C],c=C,bw=Bandwidth)[,1],y=y2),colour=Line.Colors[2])+geom_vline(xintercept=C)+geom_hline(yintercept=0) +
 
 scale_x_continuous(breaks=Tick.Marks,labels=Labels) + coord_cartesian(xlim = xlim, ylim = ylim)
 
